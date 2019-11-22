@@ -1,6 +1,4 @@
-#include <string>
-
-class Frame{
+class Frame {
     private:
         int _baseRegister;
         int _limitRegister;
