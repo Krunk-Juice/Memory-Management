@@ -10,6 +10,7 @@ class Memory_Manager {
         int pageSize = 0;
         int numberOfProcesses = 0;
         int time = 0;
+        int old_time = -1;
         std::string fileName;
         std::ifstream infile;
 
@@ -99,6 +100,23 @@ class Memory_Manager {
 
                 Process process(PID, arrivalTime, processLife, sumMemoryRequest);
                 processes.push_back(process);
+            }
+        }
+
+        void processArrival(std::vector<Process> processes, std::vector<Process> process_queue) {
+            for (int i = 0; i < processes.size(); i++) {
+                if (processes[i].isArrive(time)) {
+                    if (old_time == time)
+                        printf("\t");
+                    else {
+                        old_time = time;
+                        printf("t = %d: ", time);
+                    }
+                    printf("Process %d arrives\n", processes[i].getPID);
+                    process_queue.push_back(processes[i]);
+
+                    // printSomething
+                }
             }
         }
 };
