@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include "process.h"
+#include "frame.h"
 
 int main() {
     std::vector<Process> InputQueue;
