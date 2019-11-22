@@ -21,5 +21,35 @@ class Process {
             _isActive = false;
         }
 
-        
+        bool isArrive(int time) {
+            return _arrivalTime == time;
+        }
+
+        int getPID() {
+            return _processID;
+        }
+
+        int getMReq() {
+            return _memoryRequest;
+        }
+
+        int getTime2Mem() {
+            return _time2Memory;
+        }
+
+        int getTurnAround() {
+            return _turnAroundTime;
+        }
+
+        int getLife() {
+            return _processLife;
+        }
+
+        void setTurnAround(int time) {
+            _turnAroundTime = time;
+        }
+
+        void setTime2Mem(int time) {
+            _time2Memory = time;
+        }
 };
