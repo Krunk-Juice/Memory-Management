@@ -136,5 +136,8 @@ class Memory_Manager {
             }
             printf(" ] \n");
         }
-
+        
+        void printMemoryMap(int pageEntrySize, std::vector<Frame> memoryFrame) {
+            
+        }
 };
