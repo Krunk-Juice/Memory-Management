@@ -137,7 +137,23 @@ class Memory_Manager {
             printf(" ] \n");
         }
         
-        void printMemoryMap(int pageEntrySize, std::vector<Frame> memoryFrame) {
+        void printMemoryMap(int page_entry_size, std::vector<Frame> memory_map) {
+            printf("\tMemory Map: \n");
+            bool free_frame = false;
+            int base;
             
+            for (int i = 0; i < memory_map.size(); i++) {
+                if (!free_frame && !memory_map[i].isAssign()) {
+                    free_frame = true;
+                    base = i;
+                }
+                else if (free_frame && memory_map[i].isAssign()) {
+                    free_frame = false;
+                    printf("\t\t%d - %d : Free Frame\n", base * page_entry_size, i * page_entry_size - 1);
+                }
+            }
+
+            if (free_frame)
+                printf("\t\t%d - %d : Free Frame\n", base * page_entry_size, memory_map.size() * page_entry_size - 1);
         }
 };
