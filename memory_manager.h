@@ -103,7 +103,7 @@ class Memory_Manager {
             }
         }
 
-        void processArrival(std::vector<Process> processes, std::vector<Process> process_queue) {
+        void processArrival(std::vector<Process> processes, std::vector<Process> input_queue) {
             for (int i = 0; i < processes.size(); i++) {
                 if (processes[i].isArrive(time)) {
                     if (old_time == time)
@@ -113,10 +113,28 @@ class Memory_Manager {
                         printf("t = %d: ", time);
                     }
                     printf("Process %d arrives\n", processes[i].getPID);
-                    process_queue.push_back(processes[i]);
+                    input_queue.push_back(processes[i]);
 
-                    // printSomething
+                    printInputQueue(input_queue);
                 }
             }
         }
+
+        void removeFromInputQueue(int pid, std::vector<Process> input_queue) {
+            int i = 0;
+            while (i < input_queue.size() && input_queue[i].getPID != pid)
+                i++;
+            if (i < input_queue.size())
+                input_queue.erase (input_queue.begin() + i);
+        }
+
+        void printInputQueue(std::vector<Process> input_queue) {
+            printf("\tInput Queue: [ ");
+            if (input_queue.size() != 0) {
+                for (int i = 0; i < input_queue.size(); i++)
+                    printf("%d", input_queue[i].getPID());
+            }
+            printf(" ] \n");
+        }
+
 };

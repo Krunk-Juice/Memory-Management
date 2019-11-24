@@ -8,7 +8,7 @@
 
 int main() {
     std::vector<Process> InputQueue;
-    std::vector<Process> ProcessList;
+    std::vector<Process> Processes;
     std::vector<Frame> MainMemory;
 
     return 0;
