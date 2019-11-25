@@ -42,4 +42,10 @@ class Frame {
         void setPID(int id) {
             _processID = id;
         }
+
+        void remove() {
+            _processID = 0;
+            _pageNumber = 0;
+            _isAssigned = false;
+        }
 };

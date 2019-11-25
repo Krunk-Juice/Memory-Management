@@ -50,4 +50,14 @@ class Process {
         void setTime2Mem(int time) {
             _time2Memory = time;
         }
+
+        bool processComplete(int time) {
+            if (_processLife == (time - _time2Memory) && _isActive) {
+                _isActive = false;
+                setTurnAround(time);
+                return true;
+            }
+            else
+                return false;
+        }
 };

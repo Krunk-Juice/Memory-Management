@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include "process.h"
+#include "frame.h"
 
 class Memory_Manager {
     private:
@@ -13,6 +14,9 @@ class Memory_Manager {
         int old_time = -1;
         std::string fileName;
         std::ifstream infile;
+        std::vector<Process> input_queue;
+        std::vector<Process> processes;
+        std::vector<Frame> memory_map;
 
     public:
         void user_input() {
@@ -74,7 +78,7 @@ class Memory_Manager {
             } while (!correct);
         }
 
-        void file_scanner(std::vector<Process> processes) {
+        void addProcesses() {
 
             int PID;
             int memoryRequest;
@@ -103,7 +107,7 @@ class Memory_Manager {
             }
         }
 
-        void processArrival(std::vector<Process> processes, std::vector<Process> input_queue) {
+        void processArrival() {
             for (int i = 0; i < processes.size(); i++) {
                 if (processes[i].isArrive(time)) {
                     if (old_time == time)
@@ -115,12 +119,12 @@ class Memory_Manager {
                     printf("Process %d arrives\n", processes[i].getPID);
                     input_queue.push_back(processes[i]);
 
-                    printInputQueue(input_queue);
+                    printInputQueue();
                 }
             }
         }
 
-        void removeFromInputQueue(int pid, std::vector<Process> input_queue) {
+        void removeFromInputQueue(int pid) {
             int i = 0;
             while (i < input_queue.size() && input_queue[i].getPID != pid)
                 i++;
@@ -128,7 +132,7 @@ class Memory_Manager {
                 input_queue.erase (input_queue.begin() + i);
         }
 
-        void printInputQueue(std::vector<Process> input_queue) {
+        void printInputQueue() {
             printf("\tInput Queue: [ ");
             if (input_queue.size() != 0) {
                 for (int i = 0; i < input_queue.size(); i++)
@@ -137,7 +141,7 @@ class Memory_Manager {
             printf(" ] \n");
         }
         
-        void printMemoryMap(int page_entry_size, std::vector<Frame> memory_map) {
+        void printMemoryMap() {
             printf("\tMemory Map: \n");
             bool free_frame = false;
             int base;
@@ -149,11 +153,42 @@ class Memory_Manager {
                 }
                 else if (free_frame && memory_map[i].isAssign()) {
                     free_frame = false;
-                    printf("\t\t%d - %d : Free Frame\n", base * page_entry_size, i * page_entry_size - 1);
+                    printf("\t\t%d - %d : Free Frame\n", base * pageSize, i * pageSize - 1);
                 }
             }
 
             if (free_frame)
-                printf("\t\t%d - %d : Free Frame\n", base * page_entry_size, memory_map.size() * page_entry_size - 1);
+                printf("\t\t%d - %d : Free Frame\n", base * pageSize, memory_map.size() * pageSize - 1);
+        }
+
+        void initMemoryMap(std::vector<Frame> memoryMap) {
+            int base_register = 0;
+            int limit_register = pageSize - 1;
+            int frame_count = memorySize / pageSize;
+            for (int i = 0; i < frame_count; i++) {
+                Frame frame(base_register, limit_register);
+                memoryMap.push_back(frame);
+                base_register += pageSize;
+                limit_register += pageSize;
+            }
+        }
+
+        void updateMemoryMap() {
+            for (int i = 0; i < processes.size(); i++) {
+                if (processes[i].processComplete(time)) {
+                    if (old_time == time)
+                        printf("\t");
+                    else {
+                        old_time = time;
+                        printf("Time = %d : ", time);
+                    }
+                    printf("Process %d completed.\n", processes[i].getPID());
+                    for (int j = 0; j < memory_map.size(); j++) {
+                        if (memory_map[j].getPID == processes[i].getPID())
+                            memory_map[j].remove();
+                    }
+                    printMemoryMap();
+                }
+            }
         }
 };
