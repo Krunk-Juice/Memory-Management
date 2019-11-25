@@ -124,14 +124,6 @@ class Memory_Manager {
             }
         }
 
-        void removeFromInputQueue(int pid) {
-            int i = 0;
-            while (i < input_queue.size() && input_queue[i].getPID != pid)
-                i++;
-            if (i < input_queue.size())
-                input_queue.erase (input_queue.begin() + i);
-        }
-
         void printInputQueue() {
             printf("\tInput Queue: [ ");
             if (input_queue.size() != 0) {
@@ -173,6 +165,33 @@ class Memory_Manager {
             }
         }
 
+        void add2MemoryMap() {
+            int size = input_queue.size();
+            for (int i = 0; i < size; i++) {
+                if(isFrameAvailable(input_queue[i])) {
+                    int page_number = 1;
+                    int page_limit = input_queue[i].getMReq();
+
+                    printf("\tMemory Manager move Process %d to main memory.\n", input_queue[i].getPID());
+
+                    for (int j = 0; j < memory_map.size(); j++) {
+                        if (memory_map[j].isAssign() && page_limit > 0) {
+                            memory_map[j].setAssign();
+                            memory_map[j].setPageNumber(page_number);
+                            memory_map[j].setPID(input_queue[i].getPID());
+                            page_number++;
+                            page_limit -= pageSize;
+                        }
+                    }
+                    int pid = input_queue[i].getPID();
+                    removeFromInputQueue(input_queue[i].getPID());
+                    updateProcessTime(pid);
+                    printInputQueue();
+                    printMemoryMap();
+                }
+            }
+        }
+
         void updateMemoryMap() {
             for (int i = 0; i < processes.size(); i++) {
                 if (processes[i].processComplete(time)) {
@@ -190,5 +209,39 @@ class Memory_Manager {
                     printMemoryMap();
                 }
             }
+        }
+
+        bool isFrameAvailable(Process process) {
+            int free_frames = 0;
+            for (int i = 0; i < memory_map.size(); i++) {
+                if (!memory_map[i].isAssign())
+                    free_frames++;
+            }
+            return (free_frames * pageSize) >= process.getMReq();
+        }
+
+        void removeFromInputQueue(int pid) {
+            int i = 0;
+            while (i < input_queue.size() && input_queue[i].getPID != pid)
+                i++;
+            if (i < input_queue.size())
+                input_queue.erase (input_queue.begin() + i);
+        }
+
+        void updateProcessTime(int pid) {
+            bool found = false;
+            for (int i = 0; i < processes.size() && !found; i++) {
+                if (processes[i].getPID() == pid) {
+                    processes[i].setTime2Mem(time);
+                    found = true;
+                }
+            }
+        }
+
+        void averageTurnAround() {
+            double sum = 0;
+            for (int i = 0; i < processes.size(); i++)
+                sum += processes[i].getTurnAround();
+            printf("Average Turnaround Time: %.2lf\n", sum / processes.size());
         }
 };
