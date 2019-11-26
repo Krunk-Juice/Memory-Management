@@ -153,13 +153,13 @@ class Memory_Manager {
                 printf("\t\t%d - %d : Free Frame\n", base * pageSize, memory_map.size() * pageSize - 1);
         }
 
-        void initMemoryMap(std::vector<Frame> memoryMap) {
+        void initMemoryMap() {
             int base_register = 0;
             int limit_register = pageSize - 1;
             int frame_count = memorySize / pageSize;
             for (int i = 0; i < frame_count; i++) {
                 Frame frame(base_register, limit_register);
-                memoryMap.push_back(frame);
+                memory_map.push_back(frame);
                 base_register += pageSize;
                 limit_register += pageSize;
             }
@@ -243,5 +243,17 @@ class Memory_Manager {
             for (int i = 0; i < processes.size(); i++)
                 sum += processes[i].getTurnAround();
             printf("Average Turnaround Time: %.2lf\n", sum / processes.size());
+        }
+
+        int getTime() {
+            return time;
+        }
+
+        int getIQSize() {
+            return input_queue.size();
+        }
+
+        void incTime() {
+            time++;
         }
 };
