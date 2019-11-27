@@ -27,6 +27,10 @@ class Frame {
             return _limitRegister;
         }
 
+        int getPNumber() {
+            return _pageNumber;
+        }
+
         bool isAssign() {
             return _isAssigned;
         }

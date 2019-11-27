@@ -43,12 +43,17 @@ class Process {
             return _processLife;
         }
 
+        void setActive() {
+            _isActive = true;
+        }
+
         void setTurnAround(int time) {
             _turnAroundTime = time;
         }
 
         void setTime2Mem(int time) {
             _time2Memory = time;
+            setActive();
         }
 
         bool processComplete(int time) {

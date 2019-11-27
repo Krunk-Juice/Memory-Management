@@ -69,7 +69,7 @@ class Memory_Manager {
                 infile.open(fileName.c_str());
 
                 if (infile.fail()) {
-                    printf("ERROR: File %s cannot be found.\n", fileName);
+                    perror("ERROR: File not found.\n");
                     continue;
                 }
                 else 
@@ -114,9 +114,9 @@ class Memory_Manager {
                         printf("\t");
                     else {
                         old_time = time;
-                        printf("t = %d: ", time);
+                        printf("t = %d : ", time);
                     }
-                    printf("Process %d arrives\n", processes[i].getPID);
+                    printf("Process %d arrives\n", processes[i].getPID());
                     input_queue.push_back(processes[i]);
 
                     printInputQueue();
@@ -128,9 +128,9 @@ class Memory_Manager {
             printf("\tInput Queue: [ ");
             if (input_queue.size() != 0) {
                 for (int i = 0; i < input_queue.size(); i++)
-                    printf("%d", input_queue[i].getPID());
+                    printf("%d ", input_queue[i].getPID());
             }
-            printf(" ] \n");
+            printf("] \n");
         }
         
         void printMemoryMap() {
@@ -147,6 +147,14 @@ class Memory_Manager {
                     free_frame = false;
                     printf("\t\t%d - %d : Free Frame\n", base * pageSize, i * pageSize - 1);
                 }
+
+                if (memory_map[i].isAssign())
+                    printf("\t\t%d - %d : Process %d, Page %d\n", 
+                        memory_map[i].getBase(),
+                        memory_map[i].getLimit(),
+                        memory_map[i].getPID(),
+                        memory_map[i].getPNumber()
+                    );
             }
 
             if (free_frame)
@@ -175,7 +183,7 @@ class Memory_Manager {
                     printf("\tMemory Manager move Process %d to main memory.\n", input_queue[i].getPID());
 
                     for (int j = 0; j < memory_map.size(); j++) {
-                        if (memory_map[j].isAssign() && page_limit > 0) {
+                        if (!memory_map[j].isAssign() && page_limit > 0) {
                             memory_map[j].setAssign();
                             memory_map[j].setPageNumber(page_number);
                             memory_map[j].setPID(input_queue[i].getPID());
@@ -203,7 +211,7 @@ class Memory_Manager {
                     }
                     printf("Process %d completed.\n", processes[i].getPID());
                     for (int j = 0; j < memory_map.size(); j++) {
-                        if (memory_map[j].getPID == processes[i].getPID())
+                        if (memory_map[j].getPID() == processes[i].getPID())
                             memory_map[j].remove();
                     }
                     printMemoryMap();
@@ -222,7 +230,7 @@ class Memory_Manager {
 
         void removeFromInputQueue(int pid) {
             int i = 0;
-            while (i < input_queue.size() && input_queue[i].getPID != pid)
+            while (i < input_queue.size() && input_queue[i].getPID() != pid)
                 i++;
             if (i < input_queue.size())
                 input_queue.erase (input_queue.begin() + i);
@@ -240,9 +248,14 @@ class Memory_Manager {
 
         void averageTurnAround() {
             double sum = 0;
-            for (int i = 0; i < processes.size(); i++)
+            for (int i = 0; i < processes.size(); i++) {
                 sum += processes[i].getTurnAround();
-            printf("Average Turnaround Time: %.2lf\n", sum / processes.size());
+                printf("Process %d Turnaround Time = %d\n",
+                    processes[i].getPID(),
+                    processes[i].getTurnAround()
+                );
+            }
+            printf("Average Turnaround Time = %.2lf\n", sum / processes.size());
         }
 
         int getTime() {
