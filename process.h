@@ -47,8 +47,8 @@ class Process {
             _isActive = true;
         }
 
-        void setTurnAround(int time) {
-            _turnAroundTime = time - _arrivalTime;
+        void setTurnAround(int completion_time) {
+            _turnAroundTime = completion_time - _arrivalTime;
         }
 
         void setTime2Mem(int time) {
@@ -56,10 +56,11 @@ class Process {
             setActive();
         }
 
-        bool processComplete(int time) {
-            if (_processLife == (time - _time2Memory) && _isActive) {
+        /* Check is the process has completed execution or reached it's "completion time". */
+        bool processComplete(int completion_time) {
+            if (_processLife == (completion_time - _time2Memory) && _isActive) {
                 _isActive = false;
-                setTurnAround(time);
+                setTurnAround(completion_time);
                 return true;
             }
             else

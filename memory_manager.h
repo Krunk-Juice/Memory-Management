@@ -19,11 +19,13 @@ class Memory_Manager {
         std::vector<Frame> memory_map;
 
     public:
+
+        /* Accepts user inputs. */
         void user_input() {
             bool correct = false;
 
             do {
-                printf("Physical Memory Size: ");
+                printf("Physical(Main) Memory Size: ");
                 std::cin >> memorySize;
 
                 if (memorySize <= 0) {
@@ -52,7 +54,7 @@ class Memory_Manager {
                 }
 
                 if (memorySize % pageSize != 0) {
-                    perror("ERROR: Physical Memory Size must be a multiplier of the Page Size.\n");
+                    perror("ERROR: Physical(Main) Memory Size must be a multiplie of the Page Size.\n");
                     continue;
                 }
                 else
@@ -78,6 +80,7 @@ class Memory_Manager {
             } while (!correct);
         }
 
+        /* Read user's input file and add the "processes" to the list. */
         void addProcesses() {
 
             int PID;
@@ -107,6 +110,7 @@ class Memory_Manager {
             }
         }
 
+        /* Arrival of process and add process to input_queue. */
         void processArrival() {
             for (int i = 0; i < processes.size(); i++) {
                 if (processes[i].isArrive(time)) {
@@ -124,6 +128,7 @@ class Memory_Manager {
             }
         }
 
+        /* Print process queue waiting to added to physical(main) memory. */
         void printInputQueue() {
             printf("\tInput Queue: [ ");
             if (input_queue.size() != 0) {
@@ -133,6 +138,7 @@ class Memory_Manager {
             printf("] \n");
         }
         
+        /* Print the physical(main) memory or memory map. */
         void printMemoryMap() {
             printf("\tMemory Map: \n");
             bool free_frame = false;
@@ -161,6 +167,7 @@ class Memory_Manager {
                 printf("\t\t%d - %d : Free Frame\n", base * pageSize, memory_map.size() * pageSize - 1);
         }
 
+        /* Create the physical(main) memory or memory map. */
         void initMemoryMap() {
             int base_register = 0;
             int limit_register = pageSize - 1;
@@ -173,6 +180,7 @@ class Memory_Manager {
             }
         }
 
+        /* Add process to physical(main) memory or memory map. */
         void add2MemoryMap() {
             int size = input_queue.size();
             for (int i = 0; i < size; i++) {
@@ -200,6 +208,7 @@ class Memory_Manager {
             }
         }
 
+        /* Display the changing/updating memory map and remove processes that have completed. */
         void updateMemoryMap() {
             for (int i = 0; i < processes.size(); i++) {
                 if (processes[i].processComplete(time)) {
@@ -219,6 +228,7 @@ class Memory_Manager {
             }
         }
 
+        /* Check to see if the frame in physical(main) memory is free for allocation. */
         bool isFrameAvailable(Process process) {
             int free_frames = 0;
             for (int i = 0; i < memory_map.size(); i++) {
@@ -228,6 +238,7 @@ class Memory_Manager {
             return (free_frames * pageSize) >= process.getMReq();
         }
 
+        /* Remove process from input_queue signalling that it has been added to physical(main) memory or memory map. */
         void removeFromInputQueue(int pid) {
             int i = 0;
             while (i < input_queue.size() && input_queue[i].getPID() != pid)
@@ -236,6 +247,9 @@ class Memory_Manager {
                 input_queue.erase (input_queue.begin() + i);
         }
 
+        /* Update and keep track of the time the process is executing.
+        Once process is complete it will be removed from physical(main) memory
+        or memory map. */
         void updateProcessTime(int pid) {
             bool found = false;
             for (int i = 0; i < processes.size() && !found; i++) {
@@ -246,6 +260,7 @@ class Memory_Manager {
             }
         }
 
+        /* Calculates average turnaround time. */
         void averageTurnAround() {
             double sum = 0;
             for (int i = 0; i < processes.size(); i++) {
