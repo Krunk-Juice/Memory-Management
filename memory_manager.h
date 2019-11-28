@@ -164,7 +164,7 @@ class Memory_Manager {
             }
 
             if (free_frame)
-                printf("\t\t%d - %d : Free Frame\n", base * pageSize, memory_map.size() * pageSize - 1);
+                printf("\t\t%d - %d : Free Frame\n", base * pageSize, (int)memory_map.size() * pageSize - 1);
         }
 
         /* Create the physical(main) memory or memory map. */
