@@ -118,7 +118,7 @@ class Memory_Manager {
                         printf("\t");
                     else {
                         old_time = time;
-                        printf("Time = %d : ", time);
+                        printf("Time = %d :\n\t", time);
                     }
                     printf("Process %d arrives\n", processes[i].getPID());
                     input_queue.push_back(processes[i]);
@@ -216,7 +216,7 @@ class Memory_Manager {
                         printf("\t");
                     else {
                         old_time = time;
-                        printf("Time = %d : ", time);
+                        printf("Time = %d :\n\t", time);
                     }
                     printf("Process %d completed.\n", processes[i].getPID());
                     for (int j = 0; j < memory_map.size(); j++) {
