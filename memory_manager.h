@@ -114,7 +114,7 @@ class Memory_Manager {
                         printf("\t");
                     else {
                         old_time = time;
-                        printf("t = %d : ", time);
+                        printf("Time = %d : ", time);
                     }
                     printf("Process %d arrives\n", processes[i].getPID());
                     input_queue.push_back(processes[i]);

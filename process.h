@@ -48,7 +48,7 @@ class Process {
         }
 
         void setTurnAround(int time) {
-            _turnAroundTime = time;
+            _turnAroundTime = time - _arrivalTime;
         }
 
         void setTime2Mem(int time) {
