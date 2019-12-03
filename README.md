@@ -88,7 +88,13 @@ How to run the project:
 
 
 
-    Team Collaborators
+ Test Run Sreenshot:
+
+    [![Screen-Shot-2019-12-02-at-9-57-53-PM.png](https://i.postimg.cc/6q4GzQr0/Screen-Shot-2019-12-02-at-9-57-53-PM.png)](https://postimg.cc/bS8JwpFD)
+
+
+
+Team Collaborators
 
     Christopher Ta: Coding, Testing, How-To-Run Documentation, Documentation editing and review
 
@@ -99,10 +105,5 @@ How to run the project:
     Sean Yu:
 
 
-
-    Test Run Sreenshot:
-
-    [![Screen-Shot-2019-12-02-at-9-57-53-PM.png](https://i.postimg.cc/6q4GzQr0/Screen-Shot-2019-12-02-at-9-57-53-PM.png)](https://postimg.cc/bS8JwpFD)
-    
 
    
