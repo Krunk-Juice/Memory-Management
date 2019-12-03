@@ -92,8 +92,14 @@ How to run the project:
 
     Christopher Ta: Coding, Testing, How-To-Run Documentation, Documentation editing and review
 
-    Gilbert Paderogo:
+    Gilbert Paderogo: Data Flow Documentation, Testing 
 
     Bryan Cuevas:
 
     Sean Yu:
+
+
+
+    Test Run Sreenshot:
+
+    [![memory-management-testrun-screenshot.png](https://i.postimg.cc/V6r6PVJs/memory-management-testrun-screenshot.png)](https://postimg.cc/BL3sxN5R)
