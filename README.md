@@ -84,13 +84,11 @@ How to run the project:
 
     •   Each processes' turnaround time
 
-    •   The average turnaround time of all the processes.
+    •   The average turnaround time of all the processes
 
  Test Run Sreenshot:
 
 [![Screen-Shot-2019-12-02-at-9-57-53-PM.png](https://i.postimg.cc/6q4GzQr0/Screen-Shot-2019-12-02-at-9-57-53-PM.png)](https://postimg.cc/bS8JwpFD)
-
-
 
 Team Collaborators
 
@@ -101,7 +99,3 @@ Team Collaborators
     Bryan Cuevas:
 
     Sean Yu:
-
-
-
-   
