@@ -84,7 +84,7 @@ How to run the project:
 
     •   Each processes' turnaround time
 
-    •   The average turnaround time of all the processes
+    •   The average turnaround time of all the processes.
 
 
 
