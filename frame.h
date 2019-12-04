@@ -47,7 +47,7 @@ class Frame {
             _processID = id;
         }
 
-        /* Free frame for other processes' frame to be allocated. */
+        /* Free frame from physical(main) memory for other processes' frame to be allocated there. */
         void remove() {
             _processID = 0;
             _pageNumber = 0;

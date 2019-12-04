@@ -180,7 +180,7 @@ class Memory_Manager {
             }
         }
 
-        /* Add process to physical(main) memory or memory map. */
+        /* Add process from the input queue to physical(main) memory or memory map. */
         void add2MemoryMap() {
             int size = input_queue.size();
             for (int i = 0; i < size; i++) {
@@ -248,7 +248,7 @@ class Memory_Manager {
         }
 
         /* Update and keep track of the time the process is executing.
-        Once process is complete it will be removed from physical(main) memory
+        NOTE: Once process is complete it will be removed from physical(main) memory
         or memory map. */
         void updateProcessTime(int pid) {
             bool found = false;
