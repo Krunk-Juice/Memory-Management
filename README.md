@@ -63,7 +63,7 @@ How to run the project:
 
     •   3   (400)
 
-    After inputing 1, 2, or 3, press ENTER to continue.
+    After inputting 1, 2, or 3, press ENTER to continue.
 
     6. Terminal will prompt you to enter an input file.
     (Default input file is "in1.txt" without quotes.)
@@ -98,4 +98,4 @@ Team Collaborators
 
     Bryan Cuevas:
 
-    Sean Yu:
+    Sean Yu: Step Process Documentation (Trace), Testing
