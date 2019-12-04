@@ -96,6 +96,6 @@ Team Collaborators
 
     Gilbert Paderogo: Data Flow Documentation, Testing 
 
-    Bryan Cuevas:
+    Bryan Cuevas: Glossary Definitions Documentation, Testing
 
     Sean Yu: Step Process Documentation (Trace), Testing
